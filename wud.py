@@ -68,7 +68,7 @@ def bf_dateFile(url, s):
     for file_number in range(0,13):
         url_file = "{}{}".format(url, file_number)
         req_file = s.get(url_file, verify=False, allow_redirects=False)
-        if req_file.status_code not in [403, 401, 503, 404, 301, 500]:
+        if req_file.status_code not in [403, 401, 503, 404, 301, 500, 302]:
             print("[+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
             return True
 
@@ -78,7 +78,7 @@ def bf_date(url, s, ds):
     for date in range(2000,2022):
         url_date = "{}{}/".format(url, date)
         req_date = s.get(url_date, verify=False, allow_redirects=False)
-        if req_date.status_code not in [403, 401, 503, 404, 301, 500]:
+        if req_date.status_code not in [403, 401, 503, 404, 301, 500, 302]:
             print("[+] wp-upload directory date is open: {} [{}]".format(url_date, req_date.status_code))
         else:
             bf_dateFile(url_date, s)
@@ -90,7 +90,7 @@ def default_test(url, ds):
     s = requests.session()
     s.verify=False
     req = s.get(url, verify=False, allow_redirects=False)
-    if req.status_code not in [403, 401, 503, 404, 301, 500]:
+    if req.status_code not in [403, 401, 503, 404, 301, 500, 302]:
         print("[+] wp-upload directory is open: {} [{}]".format(url, req.status_code))
         content = req.text
         ds.structure_file(url, s, content)
