@@ -6,7 +6,8 @@ Script to check existing files (not jpg, png etc..) in a "wp-upoad
 
 # Usage
 
-```usage: wud.py [-h] [-u URL] [-t THREAD]
+```
+usage: wud.py [-h] [-u URL] [-t THREAD]
 
 optional arguments:
 -h, --help  show this help message and exit
