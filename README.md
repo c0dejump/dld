@@ -14,3 +14,7 @@ optional arguments:
 -u URL      URL to scan [required]
 -t THREAD   Number of threads to use for URL Fuzzing. Default: 20
 ```
+
+# Exemple
+
+![alt tag](https://github.com/c0dejump/wud/blob/master/static/exemple.jpg)
