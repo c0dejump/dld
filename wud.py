@@ -114,11 +114,9 @@ def default_test(url, ds):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", help="URL to scan [required]", dest='url')
-    parser.add_argument("-t", help="Number of threads to use for URL Fuzzing. \033[32mDefault: 20\033[0m", dest='thread', type=int, default=20, required=False)
     results = parser.parse_args()
                                      
     url = results.url
-    thread = results.thread
 
     ds = directory_structure()
 
