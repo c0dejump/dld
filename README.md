@@ -17,4 +17,4 @@ optional arguments:
 
 # Exemple
 
-![alt tag](https://github.com/c0dejump/wud/blob/master/static/exemple.jpg)
+![alt tag](https://github.com/c0dejump/wud/blob/main/static/exemple.png)
