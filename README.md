@@ -4,7 +4,7 @@ Files discovery script in wp-upload
 Script to check existing files (not jpg, png etc..) in a "wp-upoad
 
 
-# Usage
+## Usage
 
 ```
 usage: wud.py [-h] [-u URL] [-t THREAD]
@@ -15,6 +15,6 @@ optional arguments:
 -t THREAD   Number of threads to use for URL Fuzzing. Default: 20
 ```
 
-# Exemple
+## Exemple
 
 ![alt tag](https://github.com/c0dejump/wud/blob/main/static/exemple.png)
