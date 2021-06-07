@@ -11,7 +11,7 @@ from config import *
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
-exclude_extension = [".jpg", ".png", ".jpeg", ".gif"]
+exclude_extension = [".jpg", ".png", ".jpeg", ".gif", "css"]
 
 
 class check_file:
@@ -57,14 +57,29 @@ class directory_structure:
     def structure_file(self, url, s, content):
         soup = BeautifulSoup(content, "html.parser")
         links = soup.find_all('a')
+        files_found = []
         if links:
             for l in links:
                 link = l.get("href")
+                if "?C=" not in link and "wp-content" not in link and not any(e in link for e in exclude_extension):
+                    if not "/" in link:
+                        files_found.append(link)
                 if "/" in link and not "wp-content" in link:
                     url_link = "{}{}".format(url, link)
                     print(LINE)
                     print("\033[32m[D] {}\033[0m".format(url_link))
+                    print(LINE)
                     directory_structure().check_link_content(url_link, s, dty=True)
+        print(LINE)
+        print("{} Check files".format(INFO))
+        if files_found:
+            print("\t\033[33mPotential files found: {}\033[0m\n".format(files_found))
+            for ff in files_found:
+                url_file = "{}{}".format(url, ff)
+                req_file = requests.get(url_file, verify=False, allow_redirects=False)
+                print("\t\u251c {} [{}b]".format(url_file, len(req_file.content)))
+        else:
+            print("{} Nothing file found".format(LESS))
 
 
 def bf_dateFile(url, s):
@@ -74,9 +89,9 @@ def bf_dateFile(url, s):
         url_file = "{}{}".format(url, file_number)
         req_file = s.get(url_file, verify=False, allow_redirects=False)
         if req_file.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
-            print("\u251c [+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
+            print(" [+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
             return True
-        sys.stdout.write("\033[34m\u251c [i] {}\033[0m\r".format(url_file))
+        sys.stdout.write("\033[34m [i] {}\033[0m\r".format(url_file))
         sys.stdout.flush()
 
 
