@@ -25,7 +25,7 @@ class check_file:
                 link = l.get("href")
                 #print(link)
                 if "?C=" not in link and "wp-content" not in link and not any(e in link for e in exclude_extension):
-                    print("\t{}{}".format(req_link.url, link))
+                    print("\t\u251c {}{}".format(req_link.url, link))
 
 
 class directory_structure:
@@ -51,7 +51,7 @@ class directory_structure:
                     #print(file_link)
                     directory_structure().check_link_content(file_link, s, dty=False)
                 elif "?C=" not in link and "wp-content" not in link and not any(e in link for e in exclude_extension):
-                    print("\t{}{}".format(url_link, link))
+                    print("\t\u251c {}{}".format(url_link, link))
     
 
     def structure_file(self, url, s, content):
@@ -74,9 +74,9 @@ def bf_dateFile(url, s):
         url_file = "{}{}".format(url, file_number)
         req_file = s.get(url_file, verify=False, allow_redirects=False)
         if req_file.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
-            print("[+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
+            print("\u251c [+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
             return True
-        sys.stdout.write("\033[34m[i] {}\033[0m\r".format(url_file))
+        sys.stdout.write("\033[34m\u251c [i] {}\033[0m\r".format(url_file))
         sys.stdout.flush()
 
 
