@@ -2,7 +2,7 @@
 
 (wp-content uploads discovery)
 
-Files discovery script in wp-upload
+Files discovery script in wp-content/uploads
 
 Script to check existing files (not jpg, png etc..) in a "wp-content/uploads/"
 
