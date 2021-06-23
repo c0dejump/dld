@@ -11,7 +11,7 @@ from config import *
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 
-exclude_extension = [".jpg", ".png", ".jpeg", ".gif", "css"]
+exclude_extension = [".jpg", ".png", ".jpeg", ".gif", "css", "svg"]
 
 
 class check_file:
@@ -115,7 +115,10 @@ def default_test(url, ds):
     if req.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
         print("\n{} wp-upload directory is open: {} [{}]".format(PLUS, url, req.status_code))
         content = req.text
-        ds.structure_file(url, s, content)
+        if len(req.content) > 1:
+            ds.structure_file(url, s, content)
+        else:
+            bf_date(url, s, ds)
     elif req.status_code in [403, 401]:
         print("\n{} wp-upload directory is forbidden [{}]".format(WARNING, req.status_code))
         print("{} Bruteforce started...".format(INFO))
