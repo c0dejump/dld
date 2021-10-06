@@ -3,7 +3,6 @@
 import requests
 import sys
 import argparse
-import sys
 from bs4 import BeautifulSoup
 from config import *
 
@@ -35,7 +34,7 @@ class directory_structure:
     def check_link_content(self, url_link, s, dty):
         req_link = s.get(url_link, verify=False)
         if dty:
-            directory_structure().search_file(url_link, s, req_link.text)
+            self.search_file(url_link, s, req_link.text)
         else:
             check_file.file_triage(self, req_link, s)
 
@@ -89,7 +88,7 @@ def bf_dateFile(url, s):
         url_file = "{}{}".format(url, file_number)
         req_file = s.get(url_file, verify=False, allow_redirects=False)
         if req_file.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
-            print(" [+] wp-upload directory file is open: {} [{}]".format(url_file, req_file.status_code))
+            print("{} Directory file is open: {} [{}]".format(PLUS, url_file, req_file.status_code))
             return True
         sys.stdout.write("\033[34m [i] {}\033[0m\r".format(url_file))
         sys.stdout.flush()
@@ -101,7 +100,7 @@ def bf_date(url, s, ds):
         url_date = "{}{}/".format(url, date)
         req_date = s.get(url_date, verify=False, allow_redirects=False)
         if req_date.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
-            print("{} wp-upload directory date is open: {} [{}]".format(PLUS, url_date, req_date.status_code))
+            print("{} Directory date is open: {} [{}]".format(PLUS, url_date, req_date.status_code))
         else:
             bf_dateFile(url_date, s)
     if not dir_found:
@@ -112,19 +111,20 @@ def default_test(url, ds):
     s = requests.session()
     s.verify=False
     req = s.get(url, verify=False, allow_redirects=False)
-    if req.status_code not in [403, 401, 503, 404, 301, 500, 302, 502]:
-        print("\n{} wp-upload directory is open: {} [{}]".format(PLUS, url, req.status_code))
+    if req.status_code not in [403, 401, 503, 404, 301, 500, 302, 502] and not "Forbidden" in req.text:
+        print("\n{} Directory listing is open: {} [{}]".format(PLUS, url, req.status_code))
         content = req.text
         if len(req.content) > 1:
             ds.structure_file(url, s, content)
         else:
             bf_date(url, s, ds)
-    elif req.status_code in [403, 401]:
-        print("\n{} wp-upload directory is forbidden [{}]".format(WARNING, req.status_code))
-        print("{} Bruteforce started...".format(INFO))
-        bf_date(url, s, ds)
+    elif req.status_code in [403, 401] or "Forbidden" in req.text:
+        print("\n{} Directory listing is forbidden [{}]".format(WARNING, req.status_code))
+        if "wp" in url:
+            print("{} Bruteforce started...".format(INFO))
+            bf_date(url, s, ds)
     else:
-        print("{} wp-upload return [{}]".format(INFO, req.status_code))
+        print("{} Directory return [{}]".format(INFO, req.status_code))
         print("{} Bruteforce started...".format(INFO))
         bf_date(url, s, ds)
 
@@ -138,5 +138,5 @@ if __name__ == '__main__':
 
     ds = directory_structure()
 
-    url = "{}/wp-content/uploads/".format(url) if url[-1] != "/" else "{}wp-content/uploads/".format(url)
+    #url = "{}/wp-content/uploads/".format(url) if url[-1] != "/" else "{}wp-content/uploads/".format(url)
     default_test(url, ds)
