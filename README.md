@@ -1,8 +1,8 @@
 # wud
 
-(wp-content uploads discovery)
+(Wp-content Uploads Discovery)
 
-Files discovery script in wp-content/uploads
+Worked at first only with "wp-content/uploads" but now allows to scan any type of directory listing
 
 Script to check existing files (not jpg, png etc..) in a "wp-content/uploads/"
 
