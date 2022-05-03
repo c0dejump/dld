@@ -32,12 +32,14 @@ class directory_structure:
     check_file = check_file()
 
     def check_link_content(self, url_link, s, dty):
-        req_link = s.get(url_link, verify=False)
-        if dty:
-            self.search_file(url_link, s, req_link.text)
-        else:
-            check_file.file_triage(self, req_link, s)
-
+        try:
+            req_link = s.get(url_link, verify=False)
+            if dty:
+                self.search_file(url_link, s, req_link.text)
+            else:
+                check_file.file_triage(self, req_link, s)
+        except:
+            pass
 
     def search_file(self, url_link, s, content):
         soup = BeautifulSoup(content, "html.parser")
@@ -63,7 +65,7 @@ class directory_structure:
                 if "?C=" not in link and "wp-content" not in link and not any(e in link for e in exclude_extension):
                     if not "/" in link:
                         files_found.append(link)
-                if "/" in link and not "wp-content" in link:
+                if "/" in link and not "wp-content" in link and len(link) > 1:
                     url_link = "{}{}".format(url, link)
                     print(LINE)
                     print("\033[32m[D] {}\033[0m".format(url_link))
@@ -127,6 +129,7 @@ def default_test(url, ds):
         print("{} Directory return [{}]".format(INFO, req.status_code))
         print("{} Bruteforce started...".format(INFO))
         bf_date(url, s, ds)
+
 
 
 if __name__ == '__main__':
