@@ -1,16 +1,14 @@
-# wud
+# DLD
 
-(Wp-content Uploads Discovery)
+(Directory Listing Discovery)
 
-Worked at first only with "wp-content/uploads" but now allows to scan any type of directory listing
-
-Script to check existing files (not jpg, png etc..) in a "wp-content/uploads/"
+Script to check existing files (not jpg, png etc..) in any type of directory listing
 
 
 ## Usage
 
 ```
-usage: wud.py [-h] [-u URL]
+usage: dld.py [-h] [-u URL]
 
 optional arguments:
 -h, --help  show this help message and exit
